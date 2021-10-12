@@ -52,7 +52,7 @@ export class CartService {
     console.log('----');
   }
 
-  private computeCartTotals() {
+  computeCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
     for (let cartItem of this.cartItems) {

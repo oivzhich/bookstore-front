@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Luv2ShopFormService } from 'src/app/services/luv2-shop-form.service';
+import { FormService } from 'src/app/services/form.service';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
-import { Luv2ShopValidators } from 'src/app/validators/luv2-shop-validators';
+import { ShopValidators } from 'src/app/validators/shop-validators';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private luv2ShopFormService: Luv2ShopFormService,
+              private formService: FormService,
               private cartService: CartService,
               private checkoutService: CheckoutService,
               private router: Router) {
@@ -115,40 +115,40 @@ export class CheckoutComponent implements OnInit {
         firstName: new FormControl('',
           [Validators.required,
             Validators.minLength(2),
-            Luv2ShopValidators.notOnlyWhitespace]),
+            ShopValidators.notOnlyWhitespace]),
 
         lastName: new FormControl('',
           [Validators.required,
             Validators.minLength(2),
-            Luv2ShopValidators.notOnlyWhitespace]),
+            ShopValidators.notOnlyWhitespace]),
 
         email: new FormControl('',
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace]),
+          ShopValidators.notOnlyWhitespace]),
         city: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace]),
+          ShopValidators.notOnlyWhitespace]),
         state: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace])
+          ShopValidators.notOnlyWhitespace])
       }),
       billingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace]),
+          ShopValidators.notOnlyWhitespace]),
         city: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace]),
+          ShopValidators.notOnlyWhitespace]),
         state: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace])
+          ShopValidators.notOnlyWhitespace])
       }),
       creditCard: this.formBuilder.group({
         cardType: new FormControl('', [Validators.required]),
         nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2),
-          Luv2ShopValidators.notOnlyWhitespace]),
+          ShopValidators.notOnlyWhitespace]),
         cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
         securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
         expirationMonth: [''],
@@ -161,7 +161,7 @@ export class CheckoutComponent implements OnInit {
     const startMonth: number = new Date().getMonth() + 1;
     console.log('startMonth: ' + startMonth);
 
-    this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
+    this.formService.getCreditCardMonths(startMonth).subscribe(
       data => {
         console.log('Retrieved credit card months: ' + JSON.stringify(data));
         this.creditCardMonths = data;
@@ -170,7 +170,7 @@ export class CheckoutComponent implements OnInit {
 
     // populate credit card years
 
-    this.luv2ShopFormService.getCreditCardYears().subscribe(
+    this.formService.getCreditCardYears().subscribe(
       data => {
         console.log('Retrieved credit card years: ' + JSON.stringify(data));
         this.creditCardYears = data;
@@ -179,7 +179,7 @@ export class CheckoutComponent implements OnInit {
 
     // populate countries
 
-    this.luv2ShopFormService.getCountries().subscribe(
+    this.formService.getCountries().subscribe(
       data => {
         console.log('Retrieved countries: ' + JSON.stringify(data));
         this.countries = data;
@@ -318,7 +318,7 @@ export class CheckoutComponent implements OnInit {
       startMonth = 1;
     }
 
-    this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
+    this.formService.getCreditCardMonths(startMonth).subscribe(
       data => {
         console.log('Retrieved credit card months: ' + JSON.stringify(data));
         this.creditCardMonths = data;
@@ -336,7 +336,7 @@ export class CheckoutComponent implements OnInit {
     console.log(`${formGroupName} country code: ${countryCode}`);
     console.log(`${formGroupName} country name: ${countryName}`);
 
-    this.luv2ShopFormService.getStates(countryCode).subscribe(
+    this.formService.getStates(countryCode).subscribe(
       data => {
 
         if (formGroupName === 'shippingAddress') {

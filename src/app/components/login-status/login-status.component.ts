@@ -34,7 +34,7 @@ export class LoginStatusComponent implements OnInit {
       // user full name is exposed as a property name
       this.oktaAuthService.getUser().then(
         (res) => {
-          this.userFullName = res.name!;
+          this.userFullName = res.name;
         }
       );
     }

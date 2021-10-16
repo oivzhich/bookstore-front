@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
 
     this.oktaSignin = new OktaSignIn({
       logo: 'assets/images/logo.png',
+      features: {
+        registration: true
+      },
       baseUrl: myAppConfig.oidc.issuer.split('/oauth2')[0],
       clientId: myAppConfig.oidc.clientId,
       redirectUri: myAppConfig.oidc.redirectUri,
@@ -35,16 +38,15 @@ export class LoginComponent implements OnInit {
     this.oktaSignin.renderEl({
         el: '#okta-sign-in-widget'
       }, // this name should be same as div tag id in login.component.html
-      // @ts-ignore
       (response) => {
         if (response.status === 'SUCCESS') {
           this.oktaAuthService.signInWithRedirect();
         }
       },
-      // @ts-ignore
       (error) => {
         throw error;
       }
     );
   }
+
 }

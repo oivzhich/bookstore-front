@@ -123,7 +123,7 @@ export class CheckoutComponent implements OnInit {
             ShopValidators.notOnlyWhitespace]),
 
         email: new FormControl('',
-          [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
+          [Validators.required, Validators.email])
       }),
       shippingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2),
